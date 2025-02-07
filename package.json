@@ -14,9 +14,11 @@
   "dependencies": {
     "@nuxt/ui": "2.21.0",
     "@nuxtjs/google-fonts": "3.2.0",
+    "hoyoapi": "^1.2.0",
     "nuxt": "^3.15.4",
     "vue": "latest",
-    "vue-router": "latest"
+    "vue-router": "latest",
+    "yup": "^1.6.1"
   },
   "devDependencies": {
     "@nuxt/eslint": "^1.0.0",
