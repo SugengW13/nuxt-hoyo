@@ -1,58 +1,55 @@
 <script setup lang="ts">
-const cookie = ref('')
+const cookies = ref('')
 
 const handleCopy = () => {
   navigator.clipboard.writeText(script)
   toast.success('Script Coppied')
 }
 
-const handleSubmit = () => {
-  if (!cookie.value || cookie.value === '' || !cookie.value.includes('cookie_token_v2') || !cookie.value.includes('ltuid_v2')) {
+const handleSubmit = async () => {
+  if (!cookies.value || cookies.value === '') {
+    toast.error('Empty Token')
+    return
+  }
+
+  if (!cookies.value.includes('cookie_token_v2') || !cookies.value.includes('ltuid_v2')) {
     toast.error('Invalid Token')
     return
   }
 
-  console.log(cookie.value)
+  try {
+    const res = await api.post('/api/auth/login', {
+      body: {
+        cookies: cookies.value,
+      },
+    })
+    console.log(res)
+    if (res) navigateTo('/dashboard')
+  }
+  catch (e) {
+    console.error(e)
+  }
 }
 </script>
 
 <template>
   <div class="h-full flex items-center justify-center">
     <div class="space-y-10 w-[480px]">
-      <p class="text-center text-4xl font-bold">
-        Nuxt <span class="text-primary-600">Hoyo</span>
-      </p>
+      <nuxt-hoyo-logo class="text-center" />
 
-      <form
-        class="space-y-3"
-        @submit.prevent="handleSubmit"
-      >
+      <form class="space-y-3" @submit.prevent="handleSubmit">
         <div class="flex space-x-3">
-          <u-button
-            variant="outline"
-            type="button"
-            @click="handleCopy"
-          >
+          <u-button variant="outline" type="button" @click="handleCopy">
             <template #leading>
-              <u-icon
-                name="material-symbols:content-copy-outline"
-                class="w-4 h-4"
-              />
+              <u-icon name="material-symbols:content-copy-outline" class="w-4 h-4" />
             </template>
             Script
           </u-button>
 
-          <u-input
-            v-model="cookie"
-            placeholder="Cookies"
-            class="w-full"
-          />
+          <u-input v-model="cookies" placeholder="Cookies" class="w-full" />
         </div>
 
-        <u-button
-          block
-          type="submit"
-        >
+        <u-button block type="submit">
           Submit
         </u-button>
       </form>
