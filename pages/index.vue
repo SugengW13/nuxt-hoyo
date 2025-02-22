@@ -3,25 +3,17 @@ import { useAuthStore } from '~/store/auth'
 
 const $auth = useAuthStore()
 
-const cookies = ref('')
+const form = reactive({
+  cookies: '',
+})
 
-const handleCopy = () => {
+const onClickCopy = () => {
   navigator.clipboard.writeText(script)
   toast.success('Script Coppied')
 }
 
-const handleSubmit = async () => {
-  if (!cookies.value || cookies.value === '') {
-    toast.error('Empty Token')
-    return
-  }
-
-  if (!cookies.value.includes('cookie_token_v2') || !cookies.value.includes('ltuid_v2')) {
-    toast.error('Invalid Token')
-    return
-  }
-
-  await $auth.login(cookies.value)
+const onSubmit = async () => {
+  await $auth.login(form.cookies)
 }
 </script>
 
@@ -30,22 +22,24 @@ const handleSubmit = async () => {
     <div class="space-y-10 w-[480px]">
       <nuxt-hoyo-logo class="text-center" />
 
-      <form class="space-y-3" @submit.prevent="handleSubmit">
-        <div class="flex space-x-3">
-          <u-button variant="outline" type="button" @click="handleCopy">
+      <u-form :schema="schema.login" :state="form" class="space-y-3" @submit="onSubmit">
+        <div class="flex space-x-3 items-start">
+          <u-button variant="outline" type="button" @click="onClickCopy">
             <template #leading>
               <u-icon name="material-symbols:content-copy-outline" class="w-4 h-4" />
             </template>
             Script
           </u-button>
 
-          <u-input v-model="cookies" placeholder="Cookies" class="w-full" />
+          <u-form-group name="cookies" class="w-full">
+            <u-input v-model="form.cookies" placeholder="Cookies" />
+          </u-form-group>
         </div>
 
         <u-button block :loading="$auth.isLoading" type="submit">
           Submit
         </u-button>
-      </form>
+      </u-form>
     </div>
   </div>
 </template>

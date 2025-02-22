@@ -15,7 +15,7 @@ export const useAuthStore = defineStore('auth', {
         if (res) navigateTo('/dashboard')
       }
       catch (e) {
-        console.error(e)
+        toast.error(e.statusMessage)
         throw e
       }
       finally {
@@ -31,7 +31,7 @@ export const useAuthStore = defineStore('auth', {
         if (res) navigateTo('/')
       }
       catch (e) {
-        console.error(e)
+        toast.error(e.statusMessage)
         throw e
       }
       finally {
