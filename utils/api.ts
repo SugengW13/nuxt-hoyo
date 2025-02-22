@@ -1,4 +1,4 @@
-const api = {
+export const api = {
   afterResponse: <T>(res: T): T => {
     // TODO: Validate API response
 
@@ -44,5 +44,3 @@ const api = {
     return api.afterResponse<T>(res)
   },
 }
-
-export default api

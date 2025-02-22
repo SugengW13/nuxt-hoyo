@@ -3,7 +3,12 @@ export default defineEventHandler(async (event) => {
     const uid = getCookie(event, 'uid')
     const token = getCookie(event, 'token')
 
-    console.log(uid, token)
+    if (!uid || !token) {
+      // TODO: Return Unauthorized
+    }
+
+    setCookie(event, 'uid', '')
+    setCookie(event, 'token', '')
 
     return {
       code: 200,
@@ -13,6 +18,6 @@ export default defineEventHandler(async (event) => {
     }
   }
   catch (e) {
-    console.log(e)
+    console.error(e)
   }
 })

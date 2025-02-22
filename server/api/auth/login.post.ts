@@ -1,8 +1,6 @@
 export default defineEventHandler(async (event) => {
   const body = await readBody(event)
 
-  console.log(body)
-
   try {
     const cookies: string[] = body.cookies.split(';')
 
@@ -36,6 +34,6 @@ export default defineEventHandler(async (event) => {
     }
   }
   catch (e) {
-    console.log(e)
+    console.error(e)
   }
 })

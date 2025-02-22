@@ -1,4 +1,8 @@
 <script setup lang="ts">
+import { useAuthStore } from '~/store/auth'
+
+const $auth = useAuthStore()
+
 const cookies = ref('')
 
 const handleCopy = () => {
@@ -17,18 +21,7 @@ const handleSubmit = async () => {
     return
   }
 
-  try {
-    const res = await api.post('/api/auth/login', {
-      body: {
-        cookies: cookies.value,
-      },
-    })
-    console.log(res)
-    if (res) navigateTo('/dashboard')
-  }
-  catch (e) {
-    console.error(e)
-  }
+  await $auth.login(cookies.value)
 }
 </script>
 
@@ -49,7 +42,7 @@ const handleSubmit = async () => {
           <u-input v-model="cookies" placeholder="Cookies" class="w-full" />
         </div>
 
-        <u-button block type="submit">
+        <u-button block :loading="$auth.isLoading" type="submit">
           Submit
         </u-button>
       </form>

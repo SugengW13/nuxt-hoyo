@@ -1,4 +1,4 @@
-const toast = {
+export const toast = {
   success: (title: string) => {
     useToast().add({
       title,
@@ -28,5 +28,3 @@ const toast = {
     })
   },
 }
-
-export default toast
