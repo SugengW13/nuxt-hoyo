@@ -1,6 +1,15 @@
-import { handleAsync } from '../utils/handle-async'
-import { handleAuth } from '../utils/handle-auth'
+export default defineEventHandler(async (event) => {
+  const path = getRequestURL(event).pathname
+  const method = event.method
 
-export default defineEventHandler(handleAsync(async (event) => {
-  await handleAuth(event)
-}))
+  const protectedRoutes: Record<string, string[]> = {
+    GET: ['/api/auth/profile'],
+    POST: ['/api/auth/logout'],
+    PUT: [],
+    DELETE: [],
+  }
+
+  if (protectedRoutes[method] && protectedRoutes[method].includes(path)) {
+    handleAuth(event)
+  }
+})

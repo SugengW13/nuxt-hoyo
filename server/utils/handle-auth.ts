@@ -5,5 +5,12 @@ export function handleAuth(event: H3Event) {
   const uid = getCookie(event, 'uid')
   const token = getCookie(event, 'token')
 
-  if (!uid || !token) throw resultUnauthorized()
+  if (!uid || !token) {
+    event.context.auth = undefined
+    throw resultUnauthorized()
+  }
+
+  event.context.auth = { uid, token }
+
+  console.log(event.context.auth)
 }

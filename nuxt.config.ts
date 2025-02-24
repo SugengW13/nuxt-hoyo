@@ -10,7 +10,7 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   css: ['~/assets/css/main.css'],
   colorMode: {
-    preference: 'dark',
+    preference: 'light',
   },
   devServer: { port: 3030 },
   compatibilityDate: '2024-11-01',
