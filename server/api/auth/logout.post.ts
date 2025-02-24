@@ -1,23 +1,9 @@
-export default defineEventHandler(async (event) => {
-  try {
-    const uid = getCookie(event, 'uid')
-    const token = getCookie(event, 'token')
+import { handleAsync } from '~/server/utils/handle-async'
+import { resultOK } from '~/server/utils/handle-response'
 
-    if (!uid || !token) {
-      // TODO: Return Unauthorized
-    }
+export default defineEventHandler(handleAsync(async (event) => {
+  deleteCookie(event, 'uid')
+  deleteCookie(event, 'token')
 
-    setCookie(event, 'uid', '')
-    setCookie(event, 'token', '')
-
-    return {
-      code: 200,
-      success: true,
-      message: 'Success',
-      data: null,
-    }
-  }
-  catch (e) {
-    console.error(e)
-  }
-})
+  return resultOK(null)
+}))
