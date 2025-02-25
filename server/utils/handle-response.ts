@@ -8,10 +8,7 @@ export function resultSuccess<T>(code: number, message: string, data: T) {
 }
 
 export function resultError(code: number, message: string) {
-  return {
-    statusCode: code,
-    statusMessage: message,
-  }
+  return createError({ statusCode: code, statusMessage: message })
 }
 
 export function resultOK<T>(data: T) {

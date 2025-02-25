@@ -4,10 +4,9 @@ import { handleError } from '~/server/utils/handle-error'
 export const handleAsync = (handler: EventHandler) => (
   defineEventHandler(async (event) => {
     try {
-      const res = await handler(event)
-      return { res }
+      return await handler(event)
     }
-    catch (error: any) {
+    catch (error: HoyolabError) {
       throw handleError(error)
     }
   })

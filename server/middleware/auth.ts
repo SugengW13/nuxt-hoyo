@@ -3,8 +3,8 @@ export default defineEventHandler(async (event) => {
   const method = event.method
 
   const protectedRoutes: Record<string, string[]> = {
-    GET: ['/api/auth/profile'],
-    POST: ['/api/auth/logout'],
+    GET: ['/api/hoyolab'],
+    POST: [],
     PUT: [],
     DELETE: [],
   }
